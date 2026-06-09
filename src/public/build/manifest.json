@@ -1,0 +1,43 @@
+{
+  "resources/js/Pages/AlertHistory.jsx": {
+    "file": "assets/AlertHistory-DbPkApz6.js",
+    "name": "AlertHistory",
+    "src": "resources/js/Pages/AlertHistory.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/Pages/Dashboard.jsx": {
+    "file": "assets/Dashboard-B-Bl8ZjR.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Dashboard.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/Pages/StationDetail.jsx": {
+    "file": "assets/StationDetail-VsrA4TQG.js",
+    "name": "StationDetail",
+    "src": "resources/js/Pages/StationDetail.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-ro1Cossk.js",
+    "name": "app",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/AlertHistory.jsx",
+      "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/StationDetail.jsx"
+    ],
+    "css": [
+      "assets/app-BNnGJDII.css"
+    ]
+  }
+}
