@@ -3,7 +3,7 @@ id: 04a
 skill: pr-workflow
 branch-slug: poller-fix
 github_issue:
-status: open
+status: close
 type: fix
 対象: src/app/Models/Station.php (変更), src/app/Console/Commands/WeatherPoller.php (変更)
 内容: StationモデルおよびWeatherPollerで使われている緯度・経度のプロパティ名（latitude, longitude）を、データベースのカラム名（lat, lng）に合わせて修正する。
