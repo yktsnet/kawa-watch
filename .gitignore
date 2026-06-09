@@ -55,3 +55,9 @@ Thumbs.db
 *.log
 PLAN.md
 JUDGE.md
+
+# SQLite Databases
+src/database/*.sqlite
+src/database/*.sqlite-journal
+src/database/*.sqlite-shm
+src/database/*.sqlite-wal
