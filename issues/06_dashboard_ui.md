@@ -3,7 +3,7 @@ id: 06
 skill: pr-workflow
 branch-slug: dashboard-ui
 github_issue:
-status: open
+status: close
 type: feat
 対象: src/app/Http/Controllers/DashboardController.php (新規), src/routes/web.php (変更), src/resources/js/Pages/Dashboard.jsx (新規), src/resources/js/Pages/StationDetail.jsx (新規), src/resources/js/Pages/AlertHistory.jsx (新規), issues/done/06_dashboard-ui_pr.md (新規)
 内容: Inertia.js と React を用いて、観測所一覧（ステータス表示付き）、詳細（直近履歴表示）、およびアラート履歴を一覧表示するダッシュボード基本画面の実装。
