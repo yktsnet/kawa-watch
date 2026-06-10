@@ -3,7 +3,7 @@ id: 09
 skill: pr-workflow
 branch-slug: testing-pest-ci
 github_issue:
-status: open
+status: close
 type: feat
 対象: src/composer.json (変更), src/vite.config.js (変更), src/tests/Feature/PollerTest.php (新規), src/tests/Feature/QueueWorkerTest.php (新規), src/tests/Unit/StationTest.php (新規), .github/workflows/test.yml (新規), issues/done/09_testing-pest-ci_pr.md (新規)
 内容: Pest (または PHPUnit) テストスイートをプロジェクトに導入し、データ収集ポーリングやキューワーカーによるアラート判定機能のテストを実装する。また、GitHub ActionsによるCI（自動テスト、スタイルチェック）を構築する。さらに、Vite 開発サーバーをコンテナ内で実行可能にする設定も追加する。
