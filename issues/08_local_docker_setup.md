@@ -3,7 +3,7 @@ id: 08
 skill: pr-workflow
 branch-slug: local-docker-setup
 github_issue:
-status: open
+status: close
 type: feat
 対象: docker-compose.yml (新規), src/Dockerfile (新規), src/.env.docker (新規), issues/done/08_local-docker-setup_pr.md (新規)
 内容: Docker Composeを使用したローカル開発用のコンテナ環境を構築し、ホスト環境に依存せずコマンド一発でデータベース、メールキャッチャー、キュー連携を含めた開発環境が起動できるようにする。
