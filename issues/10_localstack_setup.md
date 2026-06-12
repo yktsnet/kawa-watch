@@ -3,7 +3,7 @@ id: 10
 skill: pr-workflow
 branch-slug: localstack-setup
 github_issue:
-status: open
+status: close
 type: feat
 対象: docker-compose.yml (変更), terraform/provider.tf (新規), terraform/main.tf (変更), src/.env.docker (変更), src/config/queue.php (確認/変更必要なら)
 内容: ローカルでのAWSエミュレーション環境としてLocalStackを導入し、Terraformを使用してSQSキューとS3バケットをLocalStack上にプロビジョニングし、Laravelアプリケーションから接続可能にする。
