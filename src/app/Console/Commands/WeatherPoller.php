@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Station;
+use App\Services\JmaApiService;
 use App\Services\SqsQueueService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -22,14 +22,17 @@ class WeatherPoller extends Command
      *
      * @var string
      */
-    protected $description = 'Poll mock weather data and send to SQS';
+    protected $description = 'Poll real weather data and send to SQS';
 
     protected SqsQueueService $sqsService;
 
-    public function __construct(SqsQueueService $sqsService)
+    protected JmaApiService $jmaApiService;
+
+    public function __construct(SqsQueueService $sqsService, JmaApiService $jmaApiService)
     {
         parent::__construct();
         $this->sqsService = $sqsService;
+        $this->jmaApiService = $jmaApiService;
     }
 
     /**
@@ -37,7 +40,7 @@ class WeatherPoller extends Command
      */
     public function handle()
     {
-        $this->info('Starting weather polling...');
+        $this->info('Starting real weather polling...');
 
         // Fetch valid stations from the database
         $stations = Station::all();
@@ -56,40 +59,29 @@ class WeatherPoller extends Command
             return;
         }
 
-        $now = Carbon::now();
-
         foreach ($stations as $station) {
-            // Generate mock weather data based on station latitude and time
-            // Base temperature based on latitude (rough approximation)
-            $latitude = $station->lat ?? 35.0; // Default to somewhere in Japan
-            $baseTemp = 30.0 - abs($latitude - 30) * 0.5;
+            $this->info("Fetching weather data for station {$station->code} via API...");
 
-            // Add diurnal variation
-            $diurnalVariation = -cos(($now->hour - 3) * M_PI / 12) * 5.0;
+            $apiData = $this->jmaApiService->getLatestWeather($station->code);
 
-            // Random fluctuation
-            $tempFluctuation = (rand(-20, 20) / 10.0);
+            if ($apiData) {
+                $eventData = [
+                    'station_code' => $station->code,
+                    'observed_at' => $apiData['observed_at'],
+                    'precipitation_mm' => $apiData['precipitation_mm'] ?? 0.0,
+                    'temperature_c' => $apiData['temperature_c'] ?? null,
+                ];
 
-            $temperature = round($baseTemp + $diurnalVariation + $tempFluctuation, 1);
+                $success = $this->sqsService->sendMessage($queueUrl, $eventData);
 
-            // Mock precipitation: mostly 0, occasionally rain
-            $isRaining = rand(1, 100) > 80;
-            $precipitation = $isRaining ? round(rand(1, 50) / 10.0, 1) : 0.0;
-
-            $eventData = [
-                'station_code' => $station->code,
-                'observed_at' => $now->format('Y-m-d H:i:s'),
-                'precipitation_mm' => $precipitation,
-                'temperature_c' => $temperature,
-            ];
-
-            $this->info("Sending weather data for station {$station->code}...");
-            $success = $this->sqsService->sendMessage($queueUrl, $eventData);
-
-            if ($success) {
-                Log::info("Successfully polled and sent weather data for {$station->code}");
+                if ($success) {
+                    Log::info("Successfully polled and sent real weather data for {$station->code}");
+                } else {
+                    Log::error("Failed to send weather data for {$station->code} to SQS");
+                }
             } else {
-                Log::error("Failed to send weather data for {$station->code}");
+                $this->warn("No weather data returned for {$station->code}");
+                Log::warning("No weather data returned from JmaApiService for station {$station->code}");
             }
         }
 

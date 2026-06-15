@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Station;
+use App\Services\RiverApiService;
 use App\Services\SqsQueueService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -22,14 +22,17 @@ class WaterLevelPoller extends Command
      *
      * @var string
      */
-    protected $description = 'Poll mock water level data and send to SQS';
+    protected $description = 'Poll real water level data and send to SQS';
 
     protected SqsQueueService $sqsService;
 
-    public function __construct(SqsQueueService $sqsService)
+    protected RiverApiService $riverApiService;
+
+    public function __construct(SqsQueueService $sqsService, RiverApiService $riverApiService)
     {
         parent::__construct();
         $this->sqsService = $sqsService;
+        $this->riverApiService = $riverApiService;
     }
 
     /**
@@ -37,10 +40,9 @@ class WaterLevelPoller extends Command
      */
     public function handle()
     {
-        $this->info('Starting water level polling...');
+        $this->info('Starting real water level polling...');
 
         // Fetch valid station codes from the database
-        // Assuming all stations are valid for this example
         $stations = Station::all();
 
         if ($stations->isEmpty()) {
@@ -57,34 +59,28 @@ class WaterLevelPoller extends Command
             return;
         }
 
-        $now = Carbon::now();
-
         foreach ($stations as $station) {
-            // Generate mock water level data based on time or station properties
-            // Base level between 0.5 and 2.0
-            $baseLevel = 1.0 + (crc32($station->code) % 10) / 10.0;
+            $this->info("Fetching water level data for station {$station->code} via API...");
 
-            // Add some variation based on current hour to simulate tide
-            $variation = sin($now->hour * M_PI / 6) * 0.5;
+            $apiData = $this->riverApiService->getLatestWaterLevel($station->code);
 
-            // Random fluctuation
-            $fluctuation = (rand(-10, 10) / 100.0);
+            if ($apiData) {
+                $eventData = [
+                    'station_code' => $station->code,
+                    'observed_at' => $apiData['observed_at'],
+                    'level_m' => $apiData['level_m'],
+                ];
 
-            $waterLevel = max(0, round($baseLevel + $variation + $fluctuation, 2));
+                $success = $this->sqsService->sendMessage($queueUrl, $eventData);
 
-            $eventData = [
-                'station_code' => $station->code,
-                'observed_at' => $now->format('Y-m-d H:i:s'),
-                'level_m' => $waterLevel,
-            ];
-
-            $this->info("Sending water level data for station {$station->code}...");
-            $success = $this->sqsService->sendMessage($queueUrl, $eventData);
-
-            if ($success) {
-                Log::info("Successfully polled and sent water level data for {$station->code}");
+                if ($success) {
+                    Log::info("Successfully polled and sent real water level data for {$station->code}");
+                } else {
+                    Log::error("Failed to send water level data for {$station->code} to SQS");
+                }
             } else {
-                Log::error("Failed to send water level data for {$station->code}");
+                $this->warn("No water level data returned for {$station->code}");
+                Log::warning("No water level data returned from RiverApiService for station {$station->code}");
             }
         }
 

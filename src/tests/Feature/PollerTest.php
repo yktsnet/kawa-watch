@@ -10,7 +10,12 @@ use Mockery\MockInterface;
 uses(RefreshDatabase::class);
 
 test('water level poller runs successfully', function () {
-    Http::fake();
+    Http::fake([
+        '*' => Http::response([
+            'waterLevel' => 2.5,
+            'observationTime' => '2023-10-25 12:00:00'
+        ], 200)
+    ]);
 
     $station = Station::create([
         'code' => 'TEST01',
@@ -35,7 +40,15 @@ test('water level poller runs successfully', function () {
 });
 
 test('weather poller runs successfully', function () {
-    Http::fake();
+    Http::fake([
+        '*/latest_time.txt' => Http::response('2023-10-25T12:00:00+09:00', 200),
+        '*.json' => Http::response([
+            'TEST01' => [
+                'temp' => [25.5, 0],
+                'precipitation1h' => [0.0, 0]
+            ]
+        ], 200)
+    ]);
 
     $station = Station::create([
         'code' => 'TEST01',
