@@ -3,7 +3,7 @@ id: 12
 skill: pr-workflow
 branch-slug: load-testing-poller
 github_issue:
-status: open
+status: close
 type: feat
 対象: src/app/Services/SqsQueueService.php (変更), src/app/Console/Commands/LoadTestPoller.php (新規)
 内容: 高トラフィックデータ受信の負荷検証のため、数千〜数万件規模の擬似センサーイベントをSQSへ高速で投入するArtisanコマンドを実装する。また、SQSへの送信を高速化するため、SQSのバッチ送信APIをサポートする。
