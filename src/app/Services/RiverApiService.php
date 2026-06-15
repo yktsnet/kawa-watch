@@ -5,7 +5,6 @@ namespace App\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use App\Services\JmaApiService;
 
 class RiverApiService
 {
@@ -33,7 +32,7 @@ class RiverApiService
                 // 通常時の水位（1.0m前後）＋雨量に応じた水位上昇
                 $rain = $weather['precipitation_mm'] ?? 0.0;
                 $baseLevel = 1.0 + (crc32($stationCode) % 10) / 10.0;
-                
+
                 // 雨が降っている場合は雨量に応じて水位上昇をシミュレート (1mmにつき15cm上昇)
                 $rise = $rain * 0.15;
                 $fluctuation = (rand(-10, 10) / 100.0); // ±10cmの揺らぎ
@@ -119,6 +118,7 @@ class RiverApiService
                         'observed_at' => $record['observed_at'],
                     ];
                 }
+
                 return $results;
             }
 
