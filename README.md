@@ -20,7 +20,7 @@ Laravel Queue Worker (ECS)
     ├── 閾値チェック → alerts 生成
     └── SES アラートメール (AlertNotification)
 
-RDS MySQL 8 (本番) / SQLite (ローカル)
+MySQL 8 (Docker/LocalStack環境等) / SQLite (ローカル)
 S3 (CSV日次アーカイブ ※予定)
 
 ALB → ECS (Laravel App) → Inertia + React (Vite 8)
@@ -34,7 +34,7 @@ ALB → ECS (Laravel App) → Inertia + React (Vite 8)
 |---|---|
 | バックエンド | Laravel 12 / PHP 8.3 |
 | フロントエンド | React 19 / Inertia.js 2.0 / Vite 8 |
-| DB | MySQL 8 (本番) / SQLite (ローカル開発) |
+| DB | MySQL 8 (Docker/LocalStack環境等) / SQLite (ローカル開発) |
 | キュー/非同期 | AWS SQS + Laravel Queue Worker |
 | スタイリング | Tailwind CSS v4 |
 | メール (警告) | AWS SES (Mailable) / Mailhog (開発) |

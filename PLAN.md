@@ -95,7 +95,7 @@ ALB → ECS (Laravel App) → Inertia + React
 - [x] LocalStack向けTerraformプロバイダ設定の追加
 - [x] SQSキュー・S3バケットのLocalStackへのプロビジョニング (`terraform apply`)
 - [x] Laravel / WorkerからのLocalStack SQS/S3への接続疎通確認
-- [ ] (本番用) ECR / ECS Cluster / EventBridge / ALB 等のTerraform定義の整理
+- [ ] (将来の本番移行用) ECR / ECS Cluster / EventBridge / ALB 等のTerraform定義テンプレートの整理（※実稼働は行わず、移行準備用）
 
 #### Laravel セットアップ & 基本実装 (完了済み)
 - [x] Laravel 12 プロジェクト作成 (Vite 8 + React 19 + Tailwind v4)
@@ -138,4 +138,4 @@ ALB → ECS (Laravel App) → Inertia + React
 - [x] **AWSモックサンドボックス**: LocalStack (Community版) を採用し、SQS・S3をローカル環境でTerraformを用いて構築可能とする。これにより本番AWS移行がスムーズになる。
 - [x] **高トラフィック対策の軸**: 水位計デバイスからの「大量データ受信・非同期処理」の最適化を主軸とし、バルク処理や並列実行時の整合性確保を実装する。
 - [x] **可視化ライブラリ**: グラフは `Chart.js`、地図は `Leaflet.js` を採用。軽量で React 19 / Inertia 環境との親和性が高い。
-- [ ] **本番AWSデプロイ手順の整備**: LocalStack向け設定から本番AWS環境への切り替え検証方法をドキュメント化する。
+- [ ] **本番AWSへの移行・デプロイ設計の整備**: LocalStack環境から本番AWSへスムーズに切り替えるための環境変数やTerraform設定変更手順のドキュメント化。
