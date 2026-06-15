@@ -12,10 +12,25 @@ class SqsQueueService
 
     public function __construct()
     {
-        $this->client = new SqsClient([
+        $config = [
             'region' => config('services.sqs.region', env('AWS_DEFAULT_REGION', 'ap-northeast-1')),
             'version' => 'latest',
-        ]);
+        ];
+
+        // LocalStack などのカスタムエンドポイントが指定されている場合は設定
+        if (env('AWS_ENDPOINT')) {
+            $config['endpoint'] = env('AWS_ENDPOINT');
+        }
+
+        // 認証情報が指定されている場合は設定
+        if (env('AWS_ACCESS_KEY_ID') && env('AWS_SECRET_ACCESS_KEY')) {
+            $config['credentials'] = [
+                'key' => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            ];
+        }
+
+        $this->client = new SqsClient($config);
     }
 
     /**
