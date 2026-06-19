@@ -13,6 +13,8 @@ export default function Verification() {
         db_records: { water_levels_count_5m: 0, weather_records_count_5m: 0 }
     });
     const [isLoadingMetrics, setIsLoadingMetrics] = useState(true);
+    const [isRedriving, setIsRedriving] = useState(false);
+    const [redriveMessage, setRedriveMessage] = useState('');
 
     // Fetch metrics from the API
     const fetchMetrics = async () => {
@@ -50,6 +52,26 @@ export default function Verification() {
             setIsTriggering(false);
             // Clear message after 5 seconds
             setTimeout(() => setTriggerMessage(''), 5000);
+        }
+    };
+
+    // Handle DLQ redrive
+    const handleRedrive = async () => {
+        setIsRedriving(true);
+        setRedriveMessage('');
+
+        try {
+            const response = await axios.post('/admin/api/dlq-redrive');
+            setRedriveMessage(response.data.message);
+            // Instantly fetch metrics after redrive
+            fetchMetrics();
+        } catch (error) {
+            setRedriveMessage('再投入処理に失敗しました。');
+            console.error(error);
+        } finally {
+            setIsRedriving(false);
+            // Clear message after 5 seconds
+            setTimeout(() => setRedriveMessage(''), 5000);
         }
     };
 
@@ -269,9 +291,24 @@ export default function Verification() {
                                         滞留メッセージ: <span className="font-bold font-mono text-sm">{metrics.dlq.pending}</span> 件
                                     </p>
                                     {metrics.dlq.pending > 0 && (
-                                        <p className="text-[10px] mt-1 text-red-600">
-                                            ※処理に連続で失敗したメッセージがDLQへ退避されています。
-                                        </p>
+                                        <>
+                                            <p className="text-[10px] mt-1 text-red-600 mb-3">
+                                                ※処理に連続で失敗したメッセージがDLQへ退避されています。
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={handleRedrive}
+                                                disabled={isRedriving}
+                                                className="w-full flex justify-center items-center py-2 px-3 border border-red-300 rounded-md shadow-sm text-xs font-semibold text-red-700 bg-white hover:bg-red-50 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                {isRedriving ? '再投入中...' : 'メッセージを再投入 (Redrive) する'}
+                                            </button>
+                                        </>
+                                    )}
+                                    {redriveMessage && (
+                                        <div className="mt-2 p-2 bg-white border border-red-200 rounded text-[10px] text-red-800 font-medium">
+                                            {redriveMessage}
+                                        </div>
                                     )}
                                 </div>
                             </div>

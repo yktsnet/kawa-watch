@@ -27,4 +27,5 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     // Verification APIs
     Route::post('/api/load-test', [VerificationController::class, 'loadTest'])->name('admin.api.load_test');
     Route::get('/api/metrics', [VerificationController::class, 'getMetrics'])->name('admin.api.metrics');
+    Route::post('/api/dlq-redrive', [VerificationController::class, 'redriveDlq'])->name('admin.api.dlq_redrive');
 });

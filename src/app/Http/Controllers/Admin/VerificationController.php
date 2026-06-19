@@ -73,4 +73,37 @@ class VerificationController extends Controller
             ]
         ]);
     }
+
+    /**
+     * Redrive messages from DLQ to primary queues.
+     */
+    public function redriveDlq(Request $request): JsonResponse
+    {
+        $waterQueueUrl = env('AWS_SQS_WATER_LEVEL_QUEUE_URL', '');
+        $weatherQueueUrl = env('AWS_SQS_WEATHER_QUEUE_URL', '');
+        $dlqQueueUrl = env('AWS_SQS_DLQ_QUEUE_URL', '');
+
+        if (empty($dlqQueueUrl) || empty($waterQueueUrl) || empty($weatherQueueUrl)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'SQS Queue URLs are not fully configured.',
+            ], 500);
+        }
+
+        try {
+            $count = $this->sqsService->redriveDlqQueue($dlqQueueUrl, $waterQueueUrl, $weatherQueueUrl);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "{$count}件のメッセージを再投入しました。",
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Unexpected error during DLQ redrive', ['error' => $e->getMessage()]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => '再投入処理中にエラーが発生しました。',
+            ], 500);
+        }
+    }
 }
