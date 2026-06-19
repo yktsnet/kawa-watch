@@ -65,30 +65,39 @@ export default function Dashboard({ stations, auth }) {
 
     return (
         <div className="min-h-screen bg-gray-100 py-8">
-            <Head title="Dashboard" />
+            <Head title="ダッシュボード" />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+                    <div className="flex items-center space-x-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-600">
+                            <path d="M2 6c.6.5 1.2 1 2.5 1C6 7 7 6 8.5 6c1.5 0 2.5 1 4 1s2.5-1 4-1 2.5 1 4 1"/>
+                            <path d="M2 12c.6.5 1.2 1 2.5 1 1.5 0 2.5-1 4-1 1.5 0 2.5 1 4 1s2.5-1 4-1 2.5 1 4 1"/>
+                            <path d="M2 18c.6.5 1.2 1 2.5 1 1.5 0 2.5-1 4-1 1.5 0 2.5 1 4 1s2.5-1 4-1 2.5 1 4 1"/>
+                        </svg>
+                        <h1 className="text-3xl font-bold text-gray-900 flex items-center">
+                            kawa-watch <span className="ml-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800">一般ダッシュボード</span>
+                        </h1>
+                    </div>
                     <div className="flex space-x-3">
                         <Link
                             href="/alerts"
                             className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                         >
-                            Alert History
+                            アラート履歴
                         </Link>
                         {auth?.user ? (
                             <Link
                                 href="/admin/verification"
-                                className="px-4 py-2 border border-slate-600 rounded-md shadow-sm text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 transition"
+                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition"
                             >
-                                Verification Mode
+                                検証モード
                             </Link>
                         ) : (
                             <Link
                                 href="/login"
-                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition"
                             >
-                                Admin Login
+                                管理者ログイン
                             </Link>
                         )}
                     </div>
