@@ -79,7 +79,7 @@ export default function Dashboard({ stations, auth }) {
                         {auth?.user ? (
                             <Link
                                 href="/admin/verification"
-                                className="px-4 py-2 border border-indigo-600 rounded-md shadow-sm text-sm font-semibold text-indigo-600 bg-white hover:bg-indigo-50 transition"
+                                className="px-4 py-2 border border-slate-600 rounded-md shadow-sm text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 transition"
                             >
                                 Verification Mode
                             </Link>

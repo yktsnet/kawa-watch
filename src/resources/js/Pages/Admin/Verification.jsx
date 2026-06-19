@@ -85,10 +85,10 @@ export default function Verification() {
                         </Link>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
                     
                     {/* Column 1: Load Test Controller */}
-                    <div className="lg:col-span-1 bg-white shadow rounded-lg border border-gray-200 p-6 flex flex-col justify-between">
+                    <div className="lg:col-span-1 bg-white shadow rounded-lg border border-gray-200 p-6 flex flex-col justify-between w-full">
                         <div>
                             <h2 className="text-lg font-bold text-gray-900 border-b border-gray-200 pb-3 mb-4 flex items-center">
                                 <span className="mr-2">⚡</span> 負荷シミュレーター
@@ -142,7 +142,7 @@ export default function Verification() {
                     </div>
 
                     {/* Column 2: SQS Monitoring */}
-                    <div className="lg:col-span-1 bg-white shadow rounded-lg border border-gray-200 p-6">
+                    <div className="lg:col-span-1 bg-white shadow rounded-lg border border-gray-200 p-6 w-full">
                         <h2 className="text-lg font-bold text-gray-900 border-b border-gray-200 pb-3 mb-4 flex items-center">
                             <span className="mr-2">📥</span> SQS キュー監視
                         </h2>
@@ -248,7 +248,7 @@ export default function Verification() {
                     </div>
 
                     {/* Column 3: DB Record Metrics */}
-                    <div className="lg:col-span-1 bg-white shadow rounded-lg border border-gray-200 p-6">
+                    <div className="lg:col-span-1 bg-white shadow rounded-lg border border-gray-200 p-6 w-full">
                         <h2 className="text-lg font-bold text-gray-900 border-b border-gray-200 pb-3 mb-4 flex items-center">
                             <span className="mr-2">📈</span> DB 書き込みパフォーマンス
                         </h2>
