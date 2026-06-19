@@ -17,6 +17,9 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'stations' => $stations,
+            'auth' => [
+                'user' => auth()->user(),
+            ],
         ]);
     }
 
@@ -39,6 +42,9 @@ class DashboardController extends Controller
             'station' => $station,
             'water_levels' => $waterLevels,
             'weather_records' => $weatherRecords,
+            'auth' => [
+                'user' => auth()->user(),
+            ],
         ]);
     }
 
@@ -51,6 +57,9 @@ class DashboardController extends Controller
 
         return Inertia::render('AlertHistory', [
             'alerts' => $alerts,
+            'auth' => [
+                'user' => auth()->user(),
+            ],
         ]);
     }
 }

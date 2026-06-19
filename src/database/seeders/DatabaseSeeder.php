@@ -14,5 +14,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StationSeeder::class,
         ]);
+
+        \App\Models\User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin',
+                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            ]
+        );
     }
 }

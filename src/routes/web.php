@@ -1,9 +1,25 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/stations/{id}', [DashboardController::class, 'show'])->name('stations.show');
 Route::get('/alerts', [DashboardController::class, 'alerts'])->name('alerts.index');
+
+// Auth Routes
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+});
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Admin Routes (Protected)
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::get('/verification', function () {
+        return Inertia::render('Admin/Verification');
+    })->name('admin.verification');
+});

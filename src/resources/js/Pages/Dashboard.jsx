@@ -43,7 +43,7 @@ const icons = {
     default: createMarkerIcon('default')
 };
 
-export default function Dashboard({ stations }) {
+export default function Dashboard({ stations, auth }) {
     const getStatusBadge = (status) => {
         const badges = {
             normal: 'bg-green-100 text-green-800',
@@ -69,12 +69,29 @@ export default function Dashboard({ stations }) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <Link
-                        href="/alerts"
-                        className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                        Alert History
-                    </Link>
+                    <div className="flex space-x-3">
+                        <Link
+                            href="/alerts"
+                            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                        >
+                            Alert History
+                        </Link>
+                        {auth?.user ? (
+                            <Link
+                                href="/admin/verification"
+                                className="px-4 py-2 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-750"
+                            >
+                                Verification Mode
+                            </Link>
+                        ) : (
+                            <Link
+                                href="/login"
+                                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                            >
+                                Admin Login
+                            </Link>
+                        )}
+                    </div>
                 </div>
 
                 {/* Map Section */}
