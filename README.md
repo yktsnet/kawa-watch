@@ -21,7 +21,7 @@ Laravel Queue Worker (ECS)
     └── SES アラートメール (AlertNotification)
 
 MySQL 8 (Docker/LocalStack環境等) / SQLite (ローカル)
-S3 (CSV日次アーカイブ ※予定)
+S3 (CSV日次アーカイブ、管理画面からのプロキシダウンロード対応)
 
 ALB → ECS (Laravel App) → Inertia + React (Vite 8)
 ```
@@ -37,7 +37,7 @@ ALB → ECS (Laravel App) → Inertia + React (Vite 8)
 | DB | MySQL 8 (Docker/LocalStack環境等) / SQLite (ローカル開発) |
 | キュー/非同期 | AWS SQS + Laravel Queue Worker |
 | スタイリング | Tailwind CSS v4 |
-| メール (警告) | AWS SES (Mailable) / Mailhog (開発) |
+| メール (警告) | AWS SES (Mailable) / Mailpit (開発) |
 
 ---
 
@@ -174,3 +174,7 @@ php artisan serve
 | アラート履歴 | 発生した警告ログ（注意・警戒・危険水位の超過履歴）の一覧表示 |
 | データ収集バッチ (Poller) | 水位データ（`app:poll-water-level`）および気象データ（`app:poll-weather`）を取得し、SQSへイベント送信するコマンド |
 | 非同期処理 (Worker) | SQSからデータを受信し、データベース保存・閾値超過時のアラート登録とSESメール通知（`AlertNotification`）を非同期実行するジョブ |
+| 管理者検証パネル | キューの滞留件数やDB書き込み件数のリアルタイム監視、バックグラウンド負荷テスト実行、DLQ再投入、S3アーカイブのダウンロードなどの検証用UI |
+| DLQメッセージ再投入 | 送信エラーなどでデッドレターキュー（DLQ）に滞留したメッセージを、検証パネルからワンクリックでメインキューへ再投入（Redrive）する機能 |
+| S3日次アーカイブ | 前日の水位データを自動でCSV化してS3に保存し、検証パネルからLaravelプロキシ経由で直接ストリームダウンロードする機能 |
+| 負荷テスト & バルク処理 | 数千〜数万件規模の擬似センサーイベントをSQSへ一括投入し、バルクインサートで高速処理する最適化設計 |
