@@ -7,7 +7,6 @@ status: close
 type: feat
 対象: src/package.json (変更), src/resources/js/Pages/Dashboard.jsx (変更), src/resources/js/Pages/StationDetail.jsx (変更)
 内容: 詳細画面に基準水位ラインを重ね合わせた水位・降水量の時系列推移グラフを、一覧画面に警戒状況に応じてピンの色が変化する観測所マップ（地図UI）を実装する。
-確認: npm run build がエラーなく通ることを確認。PR作成前に、PR本文と同じ内容を `issues/done/11_dashboard-visualization_pr.md` に書き出し、実装コードと同一コミットに含めること。
 
 ---
 

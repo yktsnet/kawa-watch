@@ -13,7 +13,6 @@ type: fix
   - 一般ダッシュボードの左上に「一般ダッシュボード」というバッジ（ピル）が表示されること。
   - 一般ダッシュボードのすべてのテキスト・ボタンが日本語に統一されること（Dashboard -> ダッシュボード表記の整理、Alert History -> アラート履歴、Verification Mode -> 検証モード、Admin Login -> 管理者ログイン）。
   - 右上のアウトラインボタンのスタイルクラスが `border-gray-300 text-gray-700 hover:bg-gray-50 transition` に統一され、不自然な枠線色の差異やフォントの太さの差異が解消されること。
-  - 【超重要】PR作成前に、必ずPR本文と同じ内容を `issues/done/20c_admin-ui-unification_pr.md` に新規ファイルとして書き出し、実装コードと同一のコミットに含めること。
 
 ---
 

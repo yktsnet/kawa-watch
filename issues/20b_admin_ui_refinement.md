@@ -11,7 +11,6 @@ type: fix
   - 正常にアセットビルド（Viteビルド）が通ること。
   - ダッシュボード右上の「Verification Mode」がグレー系のアウトラインボタンになり、青紫の「Alert History」と明確に区別できること。
   - 検証画面（Verification.jsx）のカード右端と、ヘッダー部のアクションボタンの右端が垂直にぴったり揃うこと。
-  - 【超重要】PR作成前に、必ずPR本文と同じ内容を `issues/done/20b_admin-ui-refinement_pr.md` に新規ファイルとして書き出し、実装コードと同一のコミットに含めること。
 
 ---
 

@@ -7,7 +7,6 @@ status: close
 type: feat
 対象: src/resources/js/Pages/Dashboard.jsx (変更), src/public/images/ (削除)
 内容: 地図上のピン（マーカー）の表示を、PNG画像からCSS/SVG（Lucide React等）を用いたカスタムマーカー（L.divIcon）に置き換え、不要になったPNG画像ファイルをリポジトリから削除する。
-確認: npm run build がエラーなく通ることを確認。PR作成前に、PR本文と同じ内容を `issues/done/11a_marker-cleanup_pr.md` に書き出し、実装コードと同一コミットに含めること。
 
 ---
 
