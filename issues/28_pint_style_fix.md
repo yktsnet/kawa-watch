@@ -4,7 +4,7 @@ id: 28
 skill: pr-workflow
 branch-slug: pint-style-fix
 github_issue: 8
-status: open
+status: close
 type: cleanup
 対象: src/app/Http/Controllers/Admin/VerificationController.php, src/app/Services/SqsQueueService.php, src/database/seeders/DatabaseSeeder.php, src/routes/web.php
 内容: CI（Testing & CI）の `./vendor/bin/pint --test` が4ファイルのスタイル違反で失敗し、その結果デプロイが skipped のままになっている。Pint で自動整形し CI を通す。
