@@ -3,7 +3,7 @@
 id: 26
 skill: pr-workflow
 branch-slug: cicd-deploy
-github_issue:
+github_issue: 6
 status: open
 type: feat
 対象: .github/workflows/deploy.yml (新規)
