@@ -3,7 +3,7 @@
 id: 24
 skill: pr-workflow
 branch-slug: compose-scheduler-worker
-github_issue:
+github_issue: 2
 status: open
 type: feat
 対象: docker-compose.yml
